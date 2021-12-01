@@ -13,7 +13,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.ScreenUtils;
 
-public class MyGdxGame extends ApplicationAdapter implements InputProcessor {
+public class MyGdxGame extends ApplicationAdapter {
 	SpriteBatch batch;
 	Sprite sprite;
 	Texture background;
@@ -38,8 +38,8 @@ public class MyGdxGame extends ApplicationAdapter implements InputProcessor {
 	float y;
 	int changeSide = 0;
 	OrthographicCamera camera;
-	final float GAME_WORLD_WIDTH=1000;
-	final float GAME_WORLD_HEIGHT=500;
+	final float GAME_WORLD_WIDTH=6000;
+	final float GAME_WORLD_HEIGHT=3000;
 
 
 	@Override
@@ -50,12 +50,12 @@ public class MyGdxGame extends ApplicationAdapter implements InputProcessor {
 		camera = new OrthographicCamera(GAME_WORLD_WIDTH * aspectRatio,GAME_WORLD_HEIGHT);
 		camera.position.set(GAME_WORLD_WIDTH/2,GAME_WORLD_HEIGHT/2,0);
 
-		Gdx.input.setInputProcessor(this);
+
 
 
 
 		batch = new SpriteBatch();
-		sprite = new Sprite(new Texture(Gdx.files.internal("map2.png")));
+		sprite = new Sprite(new Texture(Gdx.files.internal("map3.jpg")));
 		sprite.setSize(GAME_WORLD_WIDTH,GAME_WORLD_HEIGHT);
 
 
@@ -136,6 +136,10 @@ public class MyGdxGame extends ApplicationAdapter implements InputProcessor {
 
 		elapsedTime += Gdx.graphics.getDeltaTime();
 		Gdx.gl.glClear((GL20.GL_COLOR_BUFFER_BIT));
+		camera.position.set(x, y, 0);
+		camera.zoom = 17;
+		camera.viewportHeight= camera.zoom;
+		camera.viewportWidth= camera.zoom;
 		camera.update();
 		batch.begin();
 		batch.setProjectionMatrix(camera.combined);
@@ -197,51 +201,4 @@ public class MyGdxGame extends ApplicationAdapter implements InputProcessor {
 		sprite.getTexture().dispose();
 	}
 
-	@Override
-	public boolean keyDown(int keycode) {
-		if(Gdx.input.isKeyPressed(Input.Keys.A))
-			camera.translate(-10f,0f);
-		if(keycode == Input.Keys.D)
-			camera.translate(10f,0f);
-		if(keycode == Input.Keys.W)
-			camera.translate(0f,10f);
-		if(keycode == Input.Keys.S)
-			camera.translate(0,-10f);
-		return false;
-	}
-
-	@Override
-	public boolean keyUp(int keycode) {
-		return false;
-	}
-
-	@Override
-	public boolean keyTyped(char character) {
-		return false;
-	}
-
-	@Override
-	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-		return false;
-	}
-
-	@Override
-	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-		return false;
-	}
-
-	@Override
-	public boolean touchDragged(int screenX, int screenY, int pointer) {
-		return false;
-	}
-
-	@Override
-	public boolean mouseMoved(int screenX, int screenY) {
-		return false;
-	}
-
-	@Override
-	public boolean scrolled(float amountX, float amountY) {
-		return false;
-	}
 }
